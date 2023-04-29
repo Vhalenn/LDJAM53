@@ -3,11 +3,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Camera cam;
-    [SerializeField] private AIController aiController;
+    [SerializeField] private AIManager aiController;
 
     [Header("Var")]
+    [SerializeField] private LayerMask layerMask;
     [SerializeField] private float cameraSpeed = 30;
     [SerializeField] private float camMoveThreshold = 1;
+    [SerializeField] private bool middleClickPressed;
 
     [Header("Limit")]
     [SerializeField] private Vector2 lowerLimit = new Vector2(30,20);
@@ -39,6 +41,14 @@ public class PlayerController : MonoBehaviour
             AskForAction();
         }
 
+        if (Input.GetMouseButtonDown(2))
+        {
+            middleClickPressed = true;
+        }
+        else if (Input.GetMouseButtonUp(2))
+        {
+            middleClickPressed = false;
+        }
     }
 
     private void Selection()
@@ -50,17 +60,24 @@ public class PlayerController : MonoBehaviour
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
-        if(Physics.Raycast(ray, out RaycastHit hit))
+        if(Physics.Raycast(ray, out RaycastHit hit, 100, layerMask))
         {
             // Get needed data
             rayhit = hit;
             rayPos = rayhit.point;
 
             // Check the hitted object
-            //hit.transform;
-
-            // Result
-            aiController.MoveAgentsTo(rayPos);
+            if(hit.transform.gameObject.layer != 3)
+            {
+                if (hit.transform.TryGetComponent(out Ressource ressource))
+                {
+                    aiController.MoveAgentsTo(ressource);
+                }
+            }
+            else // TERRAIN
+            {
+                aiController.MoveAgentsTo(rayPos);
+            }
         }
     }
 

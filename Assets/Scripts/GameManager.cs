@@ -18,6 +18,8 @@ public class GameManager : Singleton<GameManager>
         {
             ShowGame();
         }
+
+        Application.targetFrameRate = 60;
     }
 
     private void Update()

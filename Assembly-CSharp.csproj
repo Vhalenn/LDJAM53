@@ -57,13 +57,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\UIManager.cs" />
+    <Compile Include="Assets\Scripts\WorldElements\GoalTrigger.cs" />
+    <Compile Include="Assets\Scripts\Utility\Singleton.cs" />
+    <Compile Include="Assets\Scripts\AIManager.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\GameplayManager.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\WorldElements\AnimalType.cs" />
     <Compile Include="Assets\Scripts\Visualizers\HandleVisualzier.cs" />
-    <Compile Include="Assets\Scripts\AIController.cs" />
-    <Compile Include="Assets\Scripts\Utility\Singleton.cs" />
-    <Compile Include="Assets\Scripts\Animal.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\WorldElements\Ressource.cs" />
+    <Compile Include="Assets\Scripts\Goal.cs" />
+    <Compile Include="Assets\Scripts\WorldElements\Base.cs" />
+    <Compile Include="Assets\Scripts\WorldElements\Animal.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Art\Shader\shader_HLSL_fogOfWar.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

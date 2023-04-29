@@ -61,7 +61,9 @@
     <Compile Include="Assets\Scripts\GameplayManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Visualizers\HandleVisualzier.cs" />
-    <Compile Include="Assets\Scripts\AnimalsAIController.cs" />
+    <Compile Include="Assets\Scripts\AIController.cs" />
+    <Compile Include="Assets\Scripts\Utility\Singleton.cs" />
+    <Compile Include="Assets\Scripts\Animal.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

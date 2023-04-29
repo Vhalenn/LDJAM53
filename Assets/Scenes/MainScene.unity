@@ -788,7 +788,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 255
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1745,6 +1745,12 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0}
   stopLerp: 0.03
   accelerationLerp: 0.07
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 192
+  selecting: 1
+  startSelectionPos: {x: 10, y: 5, z: 0}
+  endSelectionPos: {x: 30, y: 4, z: 10}
 --- !u!1 &653501806
 GameObject:
   m_ObjectHideFlags: 0
@@ -3373,11 +3379,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: pfb_horse_agent_1
       objectReference: {fileID: 0}
-    - target: {fileID: 451614578184949420, guid: 5c86a0acf193e7f478fd2eb88d275fb3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 451614578184949421, guid: 5c86a0acf193e7f478fd2eb88d275fb3,
         type: 3}
       propertyPath: m_RootOrder
@@ -4139,7 +4140,7 @@ Camera:
   m_GameObject: {fileID: 1299342669}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 4
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -4161,7 +4162,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 125
+    m_Bits: 384
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: f3d8e5da594eb214f8369ba42e09c854, type: 2}
   m_TargetDisplay: 0
@@ -4727,7 +4728,7 @@ MonoBehaviour:
   goalArray:
   - name: Tutorial
     description: Reach your herd
-    pointToReach: {fileID: 1192387874}
+    pointToReach: {fileID: 1192387876}
     foodAmount: 0
     reachedLocationGoal: 0
     reachedFoodGoal: 0
@@ -5514,7 +5515,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1844017166}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 250, y: 41.7, z: 250}
+  m_LocalPosition: {x: 250, y: 2, z: 250}
   m_LocalScale: {x: -50, y: 1, z: -50}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5541,7 +5542,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3f4efd9390e6f724d89309e39b04e563, type: 2}
+  - {fileID: 2100000, guid: c466e3f3e4e6c4341a41bec127dc4ae1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5773,7 +5774,6 @@ Transform:
   m_Children:
   - {fileID: 1844017167}
   - {fileID: 1299342670}
-  - {fileID: 2112426497}
   m_Father: {fileID: 1567870316}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6472,103 +6472,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093569578}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &2112426496
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2112426497}
-  - component: {fileID: 2112426500}
-  - component: {fileID: 2112426499}
-  - component: {fileID: 2112426498}
-  m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2112426497
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2112426496}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 27.3, z: 0}
-  m_LocalScale: {x: 19.5, y: 19.5, z: 19.5}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1906263759}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2112426498
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2112426496}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &2112426499
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2112426496}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 3f4efd9390e6f724d89309e39b04e563, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &2112426500
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2112426496}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2140959071
 GameObject:
   m_ObjectHideFlags: 0
@@ -6686,7 +6589,7 @@ PrefabInstance:
     - target: {fileID: 451614578184949421, guid: 5c86a0acf193e7f478fd2eb88d275fb3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 112.81275
+      value: 113.479
       objectReference: {fileID: 0}
     - target: {fileID: 451614578184949421, guid: 5c86a0acf193e7f478fd2eb88d275fb3,
         type: 3}
@@ -6696,7 +6599,7 @@ PrefabInstance:
     - target: {fileID: 451614578184949421, guid: 5c86a0acf193e7f478fd2eb88d275fb3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 105.792274
+      value: 105.519
       objectReference: {fileID: 0}
     - target: {fileID: 451614578184949421, guid: 5c86a0acf193e7f478fd2eb88d275fb3,
         type: 3}

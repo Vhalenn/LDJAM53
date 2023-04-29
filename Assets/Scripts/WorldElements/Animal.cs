@@ -102,6 +102,13 @@ public class Animal : MonoBehaviour
 
     public void SetRessourceToGather(Ressource ressourceObject)
     {
+        if( ressourceObject == null ||
+            (goingToBase == false && ressourceObject == gatheringObject) || 
+            !ressourceObject.AvailableRessource)
+        {
+            return;
+        }
+
         gatheringObject = ressourceObject;
         goingToBase = false;
         SetDestination(ressourceObject.transform.position, gatheringRessource:true);

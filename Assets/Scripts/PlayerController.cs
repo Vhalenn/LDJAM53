@@ -22,6 +22,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField][Range(0,1)] private float stopLerp = 0.03f;
     [SerializeField][Range(0,1)] private float accelerationLerp = 0.3f;
 
+    [Header("Storage Selection")]
+    [SerializeField] private LayerMask playerLayerMask;
+    [SerializeField] private bool selecting;
+    [SerializeField] private Vector3 startSelectionPos;
+    [SerializeField] private Vector3 endSelectionPos;
+
     void Start()
     {
         
@@ -34,9 +40,18 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Selection();
+            StartSelection();
         }
-        else if (Input.GetMouseButtonDown(1))
+        else if(selecting)
+        {
+            UpdateSelection();
+            if (Input.GetMouseButtonUp(0))
+            {
+                EndSelection();
+            }
+        }
+        
+        if (Input.GetMouseButtonDown(1))
         {
             AskForAction();
         }
@@ -51,33 +66,73 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Selection()
+    // SELECTION
+    private void StartSelection()
     {
-
+        RaycastHit hit = GetMouseRaycast();
+        startSelectionPos = endSelectionPos = hit.point;
+        selecting = true;
     }
 
+    private void UpdateSelection()
+    {
+        RaycastHit hit = GetMouseRaycast();
+        endSelectionPos = hit.point;
+    }
+
+    private void EndSelection()
+    {
+        selecting = false;
+
+        Vector3 forward = cam.transform.forward;
+        forward.y = 0;
+        Vector3 center = (startSelectionPos + endSelectionPos) * 0.5f;
+        Vector3 size = startSelectionPos - endSelectionPos;
+        size.x = Mathf.Abs(size.x);
+        size.y = Mathf.Abs(size.y) + 5;
+        size.z = Mathf.Abs(size.z);
+
+        RaycastHit[] result = Physics.BoxCastAll(center, size*0.5f, forward, Quaternion.identity, 150, playerLayerMask);
+
+        for (int i = 0; i < result.Length; i++)
+        {
+            Debug.Log($"Raycasted {result[i].transform.name}");
+        }
+    }
+
+    // ACITON
     private void AskForAction()
+    {
+        RaycastHit hit = GetMouseRaycast();
+        rayhit = hit;
+        rayPos = rayhit.point;
+
+        // Check the hitted object
+        if(hit.transform.gameObject.layer != 3)
+        {
+            if (hit.transform.TryGetComponent(out Ressource ressource))
+            {
+                aiController.MoveAgentsTo(ressource);
+            }
+        }
+        else // TERRAIN
+        {
+            aiController.MoveAgentsTo(rayPos);
+        }
+    }
+
+    private RaycastHit GetMouseRaycast()
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
-        if(Physics.Raycast(ray, out RaycastHit hit, 100, layerMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, 100, layerMask))
         {
-            // Get needed data
-            rayhit = hit;
-            rayPos = rayhit.point;
-
-            // Check the hitted object
-            if(hit.transform.gameObject.layer != 3)
-            {
-                if (hit.transform.TryGetComponent(out Ressource ressource))
-                {
-                    aiController.MoveAgentsTo(ressource);
-                }
-            }
-            else // TERRAIN
-            {
-                aiController.MoveAgentsTo(rayPos);
-            }
+            return hit;
+        }
+        else
+        {
+            Debug.LogError("Ray hitted nothing");
+            return new RaycastHit();
         }
     }
 
@@ -144,6 +199,29 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(rayPos, 0.3f);
+
+        if (selecting)
+        {
+            Gizmos.color = Color.blue;
+
+            Gizmos.DrawSphere(startSelectionPos, 0.3f);
+            Gizmos.DrawSphere(endSelectionPos, 0.3f);
+
+            Vector3 camRot = cam.transform.eulerAngles;
+            camRot.x = 0;
+            camRot.z = 0;
+            Matrix4x4 matrix = new Matrix4x4();
+            matrix.SetTRS(Vector3.zero, Quaternion.Euler(camRot), Vector3.one);
+            Gizmos.matrix = matrix;
+
+            Vector3 center = (startSelectionPos + endSelectionPos) * 0.5f;
+            Vector3 size = startSelectionPos - endSelectionPos;
+            size.x = Mathf.Abs(size.x);
+            size.y = Mathf.Abs(size.y);
+            size.z = Mathf.Abs(size.z);
+
+            Gizmos.DrawWireCube(center, size);
+        }
     }
 
 }

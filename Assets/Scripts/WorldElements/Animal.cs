@@ -14,6 +14,7 @@ public class Animal : MonoBehaviour
     [Header("Selected")]
     [SerializeField] private bool isSelected;
     [SerializeField] private bool hasBeenSelected;
+    public bool HasBeenSelected => hasBeenSelected;
 
     [Header("Storage")]
     [SerializeField] private AIManager aiController;

@@ -15,15 +15,6 @@ public class GameplayManager : MonoBehaviour
     private bool gameSuccess;
     private Goal actualGoal;
 
-    public void PlacePlayerOnSelection()
-    {
-        Animal selectedAnimal = aiManager.GetSelected();
-        if (selectedAnimal)
-        {
-            playerController.transform.position = selectedAnimal.transform.position;
-        }
-    }
-
     private void Update()
     {
         if (gameSuccess) return;
@@ -36,8 +27,36 @@ public class GameplayManager : MonoBehaviour
         }
 
         CheckGoal();
+        CheckShortcuts();
     }
 
+    private void CheckShortcuts()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Animal nextAnimal = aiManager.GetNextAgentAlreadySelected();
+            PlacePlayerOn(nextAnimal);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            PlacePlayerOnSelection();
+        }
+    }
+
+    public void PlacePlayerOnSelection()
+    {
+        PlacePlayerOn(aiManager.GetSelected());
+    }
+    private void PlacePlayerOn(Animal selectedAnimal)
+    {
+        if (selectedAnimal)
+        {
+            playerController.transform.position = selectedAnimal.transform.position;
+        }
+    }
+
+    // GOAL
     private void Success()
     {
         gameSuccess = true;

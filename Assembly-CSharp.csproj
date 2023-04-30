@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\Utility\Singleton.cs" />
     <Compile Include="Assets\Scripts\AIManager.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\UIGoal.cs" />
     <Compile Include="Assets\Scripts\GameplayManager.cs" />
     <Compile Include="Assets\Scripts\WorldElements\AnimalType.cs" />
     <Compile Include="Assets\Scripts\Visualizers\HandleVisualzier.cs" />

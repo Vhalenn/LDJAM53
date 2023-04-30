@@ -91,7 +91,6 @@ public class PlayerController : MonoBehaviour
 
         selectionDecal.enabled = true;
         selectionDecal.transform.position = selectionCenter;
-        //selectionDecal.transform.rotation = Quaternion.Euler(GetCameraYRot());
         selectionDecal.size = new Vector3(selectionSize.x, selectionSize.z, selectionSize.y);
     }
 
@@ -108,7 +107,6 @@ public class PlayerController : MonoBehaviour
 
         if(selectionSize.magnitude < 5.4f)
         {
-            Debug.Log("DID A SIMPLE CLIC SELECTION");
             RaycastHit simpleRay = GetMouseRaycast(playerLayerMask);
 
             if(simpleRay.transform != null)

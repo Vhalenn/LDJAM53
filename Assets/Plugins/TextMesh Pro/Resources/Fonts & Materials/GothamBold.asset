@@ -64,7 +64,8 @@ MonoBehaviour:
   materialHashCode: 534368733
   m_Version: 1.1.0
   m_SourceFontFileGUID: b6d648f2ddffc684399a28c57137563c
-  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: b6d648f2ddffc684399a28c57137563c, type: 3}
+  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: b6d648f2ddffc684399a28c57137563c,
+    type: 3}
   m_SourceFontFile: {fileID: 0}
   m_AtlasPopulationMode: 0
   m_FaceInfo:
@@ -84,8 +85,8 @@ MonoBehaviour:
     m_SubscriptOffset: -14.24
     m_SubscriptSize: 0.5
     m_UnderlineOffset: -12.727
-    m_UnderlineThickness: 1.78
-    m_StrikethroughOffset: 19.2
+    m_UnderlineThickness: 15
+    m_StrikethroughOffset: 30
     m_StrikethroughThickness: 1.78
     m_TabWidth: 27
   m_GlyphTable:
@@ -5007,6 +5008,7 @@ Material:
     - _BumpFace: 0
     - _BumpOutline: 0
     - _ColorMask: 15
+    - _CullMode: 0
     - _Diffuse: 0.5
     - _DiffusePower: 1
     - _FaceDilate: 0

@@ -5,10 +5,15 @@ using UnityEngine.AI;
 public class Animal : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private Transform ditheringPattern;
     [SerializeField] private bool visible;
     public bool Visible { get => visible; set => visible = value; }
     [SerializeField] private AnimalType type;
     public AnimalType Type => type;
+
+    [Header("Selected")]
+    [SerializeField] private bool isSelected;
+    [SerializeField] private bool hasBeenSelected;
 
     [Header("Storage")]
     [SerializeField] private AIManager aiController;
@@ -25,6 +30,12 @@ public class Animal : MonoBehaviour
     public void Init(Base baseObject)
     {
         this.baseObject = baseObject;
+
+        if (ditheringPattern)
+        {
+            ditheringPattern.localRotation = Quaternion.Euler(new Vector3(0, Random.value * 360, 0));
+            ditheringPattern.gameObject.SetActive(false);
+        }
     }
 
     private void Update()
@@ -32,6 +43,17 @@ public class Animal : MonoBehaviour
         isOnOffMeshLink = agent.isOnOffMeshLink;
 
         GatheringCheck();
+    }
+    public void Select()
+    {
+        hasBeenSelected = true;
+        isSelected = true;
+        ditheringPattern.gameObject.SetActive(true);
+    }
+    public void Unselect()
+    {
+        isSelected = false;
+        hasBeenSelected = true;
     }
 
     private void GatheringCheck()
@@ -54,6 +76,7 @@ public class Animal : MonoBehaviour
                     {
                         if (gatheringObject.AvailableRessource)
                         {
+                            goingToBase = false;
                             SetRessourceToGather(gatheringObject);
                         }
                         else
@@ -103,7 +126,7 @@ public class Animal : MonoBehaviour
     public void SetRessourceToGather(Ressource ressourceObject)
     {
         if( ressourceObject == null ||
-            (goingToBase == false && ressourceObject == gatheringObject) || 
+            (goingToBase == true && ressourceObject == gatheringObject) || 
             !ressourceObject.AvailableRessource)
         {
             return;

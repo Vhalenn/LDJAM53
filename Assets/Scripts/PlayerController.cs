@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Camera cam;
-    [SerializeField] private AIManager aiController;
+    [SerializeField] private AIManager aiManager;
 
     [Header("Var")]
     [SerializeField] private LayerMask layerMask;
@@ -22,15 +25,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField][Range(0,1)] private float stopLerp = 0.03f;
     [SerializeField][Range(0,1)] private float accelerationLerp = 0.3f;
 
-    [Header("Storage Selection")]
+    [Header("Selection")]
+    [SerializeField] private DecalProjector selectionDecal;
     [SerializeField] private LayerMask playerLayerMask;
     [SerializeField] private bool selecting;
     [SerializeField] private Vector3 startSelectionPos;
     [SerializeField] private Vector3 endSelectionPos;
+    [SerializeField] private Vector3 selectionCenter, selectionSize;
 
     void Start()
     {
-        
+        selectionDecal.enabled = false;
+        selecting = false;
     }
 
     private void Update()
@@ -69,41 +75,82 @@ public class PlayerController : MonoBehaviour
     // SELECTION
     private void StartSelection()
     {
-        RaycastHit hit = GetMouseRaycast();
+        RaycastHit hit = GetMouseRaycast(layerMask);
         startSelectionPos = endSelectionPos = hit.point;
         selecting = true;
     }
 
     private void UpdateSelection()
     {
-        RaycastHit hit = GetMouseRaycast();
+        RaycastHit hit = GetMouseRaycast(layerMask);
         endSelectionPos = hit.point;
+
+        GetSelectionCenterAndSize(out selectionCenter, out selectionSize);
+        selectionCenter.y += 5;
+        selectionSize.y += 10;
+
+        selectionDecal.enabled = true;
+        selectionDecal.transform.position = selectionCenter;
+        //selectionDecal.transform.rotation = Quaternion.Euler(GetCameraYRot());
+        selectionDecal.size = new Vector3(selectionSize.x, selectionSize.z, selectionSize.y);
     }
 
     private void EndSelection()
     {
         selecting = false;
+        selectionDecal.enabled = false;
 
         Vector3 forward = cam.transform.forward;
         forward.y = 0;
-        Vector3 center = (startSelectionPos + endSelectionPos) * 0.5f;
-        Vector3 size = startSelectionPos - endSelectionPos;
+        GetSelectionCenterAndSize(out selectionCenter, out selectionSize);
+
+        aiManager.ClearSelection();
+
+        if(selectionSize.magnitude < 5.4f)
+        {
+            Debug.Log("DID A SIMPLE CLIC SELECTION");
+            RaycastHit simpleRay = GetMouseRaycast(playerLayerMask);
+
+            if(simpleRay.transform != null)
+            {
+                aiManager.Select(simpleRay.transform.gameObject);
+            }
+        }
+        else
+        {
+            RaycastHit[] result = Physics.BoxCastAll(selectionCenter, selectionSize * 0.5f, forward, Quaternion.identity, 150, playerLayerMask);
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                aiManager.Select(result[i].transform.gameObject);
+                //Debug.Log($"Raycasted {result[i].transform.name}");
+            }
+        }
+    }
+
+    private void GetSelectionCenterAndSize(out Vector3 center, out Vector3 size)
+    {
+        center = (startSelectionPos + endSelectionPos) * 0.5f;
+
+        size = startSelectionPos - endSelectionPos;
         size.x = Mathf.Abs(size.x);
         size.y = Mathf.Abs(size.y) + 5;
         size.z = Mathf.Abs(size.z);
+    }
 
-        RaycastHit[] result = Physics.BoxCastAll(center, size*0.5f, forward, Quaternion.identity, 150, playerLayerMask);
+    private Vector3 GetCameraYRot()
+    {
+        Vector3 camRot = cam.transform.eulerAngles;
+        camRot.x = 0;
+        camRot.z = 0;
 
-        for (int i = 0; i < result.Length; i++)
-        {
-            Debug.Log($"Raycasted {result[i].transform.name}");
-        }
+        return camRot;
     }
 
     // ACITON
     private void AskForAction()
     {
-        RaycastHit hit = GetMouseRaycast();
+        RaycastHit hit = GetMouseRaycast(layerMask);
         rayhit = hit;
         rayPos = rayhit.point;
 
@@ -112,20 +159,20 @@ public class PlayerController : MonoBehaviour
         {
             if (hit.transform.TryGetComponent(out Ressource ressource))
             {
-                aiController.MoveAgentsTo(ressource);
+                aiManager.MoveAgentsTo(ressource);
             }
         }
         else // TERRAIN
         {
-            aiController.MoveAgentsTo(rayPos);
+            aiManager.MoveAgentsTo(rayPos);
         }
     }
 
-    private RaycastHit GetMouseRaycast()
+    private RaycastHit GetMouseRaycast(LayerMask mask)
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100, layerMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, 100, mask))
         {
             return hit;
         }
@@ -207,20 +254,14 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawSphere(startSelectionPos, 0.3f);
             Gizmos.DrawSphere(endSelectionPos, 0.3f);
 
-            Vector3 camRot = cam.transform.eulerAngles;
-            camRot.x = 0;
-            camRot.z = 0;
+            Vector3 camRot = GetCameraYRot();
             Matrix4x4 matrix = new Matrix4x4();
             matrix.SetTRS(Vector3.zero, Quaternion.Euler(camRot), Vector3.one);
             Gizmos.matrix = matrix;
 
-            Vector3 center = (startSelectionPos + endSelectionPos) * 0.5f;
-            Vector3 size = startSelectionPos - endSelectionPos;
-            size.x = Mathf.Abs(size.x);
-            size.y = Mathf.Abs(size.y);
-            size.z = Mathf.Abs(size.z);
+            GetSelectionCenterAndSize(out selectionCenter, out selectionSize);
 
-            Gizmos.DrawWireCube(center, size);
+            Gizmos.DrawWireCube(selectionCenter, selectionSize);
         }
     }
 

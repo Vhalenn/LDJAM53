@@ -50,6 +50,8 @@ MonoBehaviour:
   type: 0
   gatheredAmount: {x: 3, y: 7}
   maxQuantity: 50
+  model: {fileID: 5892311020397167540}
+  hitbox: {fileID: 5892311018664668456}
   actualQuantity: 50
 --- !u!135 &5892311018664668456
 SphereCollider:

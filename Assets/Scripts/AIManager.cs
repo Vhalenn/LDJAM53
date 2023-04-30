@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AIManager : MonoBehaviour
@@ -7,18 +8,17 @@ public class AIManager : MonoBehaviour
     [SerializeField] Material cursorMaterial;
 
     [Header("Controlled")]
-    [SerializeField] private Animal[] selectedAgents;
+    [SerializeField] private List<Animal> selectedAgents;
 
     [Header("Storage")]
     [SerializeField] private Animal[] allAgents;
     [SerializeField] private Base[] allBases;
     [SerializeField] private Matrix4x4[] selectedAgentMatrices;
 
-    void Start()
+    void Awake()
     {
         allBases = GetComponentsInChildren<Base>();
         allAgents = GetComponentsInChildren<Animal>();
-        SetSelection(allAgents);
 
         for (int i = 0; i < allAgents.Length; i++)
         {
@@ -27,17 +27,15 @@ public class AIManager : MonoBehaviour
             Base appropriatedBase = FindBase(allAgents[i].Type);
             allAgents[i].Init(appropriatedBase);
         }
-    }
 
-    private void SetSelection(Animal[] array)
-    {
-        selectedAgents = array; // TEMP
+        ClearSelection();
+        Select(allAgents[0]);
     }
 
     private void Update()
     {
-        selectedAgentMatrices = new Matrix4x4[selectedAgents.Length];
-        for (int i = 0; i < selectedAgents.Length; i++)
+        selectedAgentMatrices = new Matrix4x4[selectedAgents.Count];
+        for (int i = 0; i < selectedAgents.Count; i++)
         {
             if (selectedAgents[i] == null) continue;
 
@@ -47,6 +45,7 @@ public class AIManager : MonoBehaviour
         Graphics.DrawMeshInstanced(cursorMesh, 0, cursorMaterial, selectedAgentMatrices);
     }
 
+    // GET
     private Base FindBase(AnimalType type)
     {
         for (int i = 0; i < allBases.Length; i++)
@@ -61,9 +60,16 @@ public class AIManager : MonoBehaviour
         return null;
     }
 
+    public Animal GetSelected()
+    {
+        if (selectedAgents == null) return null;
+        else return selectedAgents[0];
+    }
+
+    // MOVEMENT
     public void MoveAgentsTo(Ressource ressource)
     {
-        for (int i = 0; i < selectedAgents.Length; i++)
+        for (int i = 0; i < selectedAgents.Count; i++)
         {
             if (selectedAgents[i] == null) continue;
 
@@ -73,11 +79,48 @@ public class AIManager : MonoBehaviour
 
     public void MoveAgentsTo(Vector3 pos)
     {
-        for (int i = 0; i < selectedAgents.Length; i++)
+        for (int i = 0; i < selectedAgents.Count; i++)
         {
             if (selectedAgents[i] == null) continue;
 
             selectedAgents[i].SetDestination(pos, randomizePos:true);
+        }
+    }
+
+    // SELECTION
+    private void SetSelection(Animal[] array)
+    {
+        ClearSelection();
+        selectedAgents.AddRange(array); // TEMP
+    }
+
+    public void ClearSelection()
+    {
+        if(selectedAgents != null)
+        {
+            for(int i = 0; i < selectedAgents.Count; i++)
+            {
+                if (selectedAgents[i]) selectedAgents[i].Unselect();
+            }
+        }
+
+        selectedAgents = new List<Animal>();
+    }
+    public void Select(GameObject gameObject)
+    {
+        if (gameObject.TryGetComponent(out Animal animal))
+        {
+            Select(animal);
+        }
+
+    }
+    public void Select(Animal animal)
+    {
+        animal.Select();
+
+        if(!selectedAgents.Contains(animal))
+        {
+            selectedAgents.Add(animal);
         }
     }
 

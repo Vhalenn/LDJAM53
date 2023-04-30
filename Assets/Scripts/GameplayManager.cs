@@ -15,6 +15,15 @@ public class GameplayManager : MonoBehaviour
     private bool gameSuccess;
     private Goal actualGoal;
 
+    public void PlacePlayerOnSelection()
+    {
+        Animal selectedAnimal = aiManager.GetSelected();
+        if (selectedAnimal)
+        {
+            playerController.transform.position = selectedAnimal.transform.position;
+        }
+    }
+
     private void Update()
     {
         if (gameSuccess) return;
@@ -54,7 +63,7 @@ public class GameplayManager : MonoBehaviour
     }
 
     // CALLED BY TRIGGER EVENT
-    private void ValidateGoalPos(int index)
+    public void ValidateGoalPos(int index)
     {
         goalArray[index].reachedLocationGoal = true;
     }

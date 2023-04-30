@@ -71,6 +71,8 @@
     <Compile Include="Assets\Scripts\WorldElements\Animal.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Art\Shader\Stylized\CustomLighting.hlsl" />
+    <None Include="Assets\Art\Shader\Stylized\Lighting.hlsl" />
     <None Include="Assets\Art\Shader\shader_HLSL_fogOfWar.shader" />
   </ItemGroup>
   <ItemGroup>

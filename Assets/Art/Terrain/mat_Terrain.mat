@@ -10,7 +10,7 @@ Material:
   m_Name: mat_Terrain
   m_Shader: {fileID: 4800000, guid: 69c1f799e772cb6438f56c23efccb782, type: 3}
   m_ValidKeywords:
-  - _TERRAIN_INSTANCED_PERPIXEL_NORMAL
+  - _TERRAIN_BLEND_HEIGHT
   m_InvalidKeywords:
   - WORLD_SPACE
   - _HEATMAP
@@ -97,9 +97,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _EnableHeightBlend: 0
-    - _EnableInstancedPerPixelNormal: 1
-    - _HeightTransition: 0
+    - _EnableHeightBlend: 1
+    - _EnableInstancedPerPixelNormal: 0
+    - _HeightTransition: 0.01
     - _Metallic0: 0
     - _Metallic1: 0
     - _Metallic2: 0

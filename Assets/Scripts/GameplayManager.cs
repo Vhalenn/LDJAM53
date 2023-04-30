@@ -2,18 +2,25 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private AIManager aiManager;
 
     [Header("Goal")]
     [SerializeField] private int actualGoalIndex;
     [SerializeField] private Goal[] goalArray;
+    [SerializeField] private int foodOwned;
 
     // TUTORIAL MESSAGES
 
     [Header("Storage")]
     private bool gameSuccess;
     private Goal actualGoal;
+
+    private void Start()
+    {
+        UpdateGoal();
+    }
 
     private void Update()
     {
@@ -61,6 +68,26 @@ public class GameplayManager : MonoBehaviour
     {
         gameSuccess = true;
     }
+    public void UpdateFoodOwned(int foodOwned)
+    {
+        this.foodOwned = foodOwned;
+
+        if (foodOwned > actualGoal.foodAmount)
+        {
+            actualGoal.ReachedFoodGoal();
+            CheckGoal();
+        }
+
+        UpdateGoal();
+    }
+
+    private void UpdateGoal()
+    {
+        actualGoal = goalArray[actualGoalIndex];
+
+        // Update UI Infos
+        gameManager.UIManager.UpdateGoalText(actualGoal.GetGoalText(foodOwned));
+    }
 
     private void CheckGoal()
     {
@@ -70,10 +97,26 @@ public class GameplayManager : MonoBehaviour
         {
             if (actualGoal.Success())
             {
+                // RESET
+                if(actualGoal.foodAmount > 0)
+                {
+                    aiManager.ResetAllBases();
+                }
+
+                // GO TO NEW GOAL
+                Debug.Log($"<color=green>Goal {actualGoalIndex} is a success !</color>");
+                gameManager.UIManager.GoalSuccess();
                 actualGoalIndex++;
 
-                // Update UI Infos
+                // CHANGE THE GOAL
+                if (actualGoalIndex >= goalArray.Length)
+                {
+                    Success();
+                    return;
+                }
+                UpdateGoal();
             }
+
         }
         else
         {
@@ -84,6 +127,9 @@ public class GameplayManager : MonoBehaviour
     // CALLED BY TRIGGER EVENT
     public void ValidateGoalPos(int index)
     {
-        goalArray[index].reachedLocationGoal = true;
+        goalArray[index].ReachedLocation();
+
+        if(actualGoal == null) actualGoal = goalArray[actualGoalIndex];
+        gameManager.UIManager.UpdateGoalText(actualGoal.GetGoalText(foodOwned));
     }
 }

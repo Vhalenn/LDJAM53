@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 6176191356338617458}
   - component: {fileID: 6869256118783285827}
   m_Layer: 0
-  m_Name: pfb_base
+  m_Name: pfb_base_horse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

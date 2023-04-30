@@ -17,7 +17,7 @@ public class Animal : MonoBehaviour
     public bool HasBeenSelected => hasBeenSelected;
 
     [Header("Storage")]
-    [SerializeField] private AIManager aiController;
+    [SerializeField] private AIManager aiManager;
     [SerializeField] private NavMeshPath path;
     [SerializeField] private bool isOnOffMeshLink;
     [SerializeField] private Color gizmoColor;

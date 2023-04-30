@@ -6,6 +6,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] CanvasGroup mainMenu;
     [SerializeField] CanvasGroup gameUI;
 
+    [Header("Game")]
+    [SerializeField] private UIGoal uiGoal;
+
     [Header("Variables")]
     [SerializeField] private float fadeSpeed;
 
@@ -39,6 +42,16 @@ public class UIManager : MonoBehaviour
 
         canvasGroup.interactable = state;
         canvasGroup.blocksRaycasts = state;
+    }
+
+    public void UpdateGoalText(string text)
+    {
+        uiGoal.UpdateText(text);
+    }
+
+    public void GoalSuccess()
+    {
+        uiGoal.GoalSuccess();
     }
 
     // VARIOUS

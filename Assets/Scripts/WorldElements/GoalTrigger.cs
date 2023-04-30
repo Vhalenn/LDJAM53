@@ -8,6 +8,9 @@ public class GoalTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (triggered) return;
+        Debug.Log($"<color=green>Triggered {transform.name} by {other.name} </color>");
+
         triggered = true;
         if (_event != null) _event.Invoke();
     }

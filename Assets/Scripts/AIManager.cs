@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class AIManager : MonoBehaviour
 {
+    [SerializeField] GameplayManager gameplayManager;
+
     [Header("Cursor")]
     [SerializeField] Mesh cursorMesh;
     [SerializeField] Material cursorMaterial;
@@ -25,9 +27,14 @@ public class AIManager : MonoBehaviour
         for (int i = 0; i < allAgents.Length; i++)
         {
             if (allAgents[i] == null) continue;
-
             Base appropriatedBase = FindBase(allAgents[i].Type);
             allAgents[i].Init(appropriatedBase);
+        }
+
+        for (int i = 0; i < allBases.Length; i++)
+        {
+            if (allBases[i] == null) continue;
+            allBases[i].Init(this);
         }
 
         ClearSelection();
@@ -69,6 +76,31 @@ public class AIManager : MonoBehaviour
         // IF FAILED
         Debug.LogError($"Couldn't find the base of type {type}");
         return null;
+    }
+
+    public void RefreshFoodGoal()
+    {
+        gameplayManager.UpdateFoodOwned(GetFoodInBases());
+    }
+
+    public int GetFoodInBases()
+    {
+        int amount = 0;
+
+        for (int i = 0; i < allBases.Length; i++)
+        {
+            amount += allBases[i].NumberOfFood;
+        }
+
+        return amount;
+    }
+
+    public void ResetAllBases()
+    {
+        for (int i = 0; i < allBases.Length; i++)
+        {
+            allBases[i].NumberOfFood = 0;
+        }
     }
 
     public Animal GetNextAgentAlreadySelected(bool tryFromZero = false)

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  gatheredAmount: {x: 3, y: 7}
+  gatheredAmount: {x: 7, y: 20}
   maxQuantity: 50
   model: {fileID: 5892311020397167540}
   hitbox: {fileID: 5892311018664668456}

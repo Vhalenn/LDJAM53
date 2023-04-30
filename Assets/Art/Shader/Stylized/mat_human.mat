@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mat_stylizedLighting
+  m_Name: mat_human
   m_Shader: {fileID: -6465566751694194690, guid: 346d460903b9f164cb2d79a991a78683,
     type: 3}
   m_ValidKeywords: []
@@ -68,5 +68,5 @@ Material:
     - _QueueOffset: 0
     - _Smoothness: 0.683
     m_Colors:
-    - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

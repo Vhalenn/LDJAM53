@@ -3,6 +3,8 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private UIManager uiManager;
+    public UIManager UIManager => uiManager;
+
     [SerializeField] private GameplayManager gameplayManager;
     [SerializeField] private bool startWithMenu;
     [SerializeField] private bool inMenu;

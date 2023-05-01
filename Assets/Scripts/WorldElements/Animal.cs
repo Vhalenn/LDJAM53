@@ -6,10 +6,12 @@ public class Animal : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Transform ditheringPattern;
+    [SerializeField] private LineRenderer line;
     [SerializeField] private bool visible;
     public bool Visible { get => visible; set => visible = value; }
     [SerializeField] private AnimalType type;
     public AnimalType Type => type;
+    [SerializeField] private Color gatherColor, moveColor;
 
     [Header("Selected")]
     [SerializeField] private bool isSelected;
@@ -115,7 +117,7 @@ public class Animal : MonoBehaviour
             pos += Random.insideUnitSphere * agent.stoppingDistance * 0.5f;
         }
 
-        gizmoColor = gatheringRessource ? Color.yellow : Color.green;
+        gizmoColor = gatheringRessource ? gatherColor : moveColor;
 
         if (agent)
         {
@@ -147,6 +149,14 @@ public class Animal : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         path = agent.path;
+
+        if(path != null && path.corners != null)
+        {
+            line.positionCount = path.corners.Length;
+            line.SetPositions(path.corners);
+            line.endColor = gizmoColor;
+            line.startColor = gizmoColor;
+        }
     }
 
     private void OnDrawGizmos()

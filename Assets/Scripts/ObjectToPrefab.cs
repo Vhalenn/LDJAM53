@@ -1,8 +1,12 @@
+
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
+#endif
 
 public class ObjectToPrefab : MonoBehaviour
 {
+#if UNITY_EDITOR
     [SerializeField] private GameObject yellowPrefab;
     [SerializeField] private GameObject greenPrefab;
 
@@ -32,5 +36,5 @@ public class ObjectToPrefab : MonoBehaviour
             obj.transform.localScale = tr.localScale;
         }
     }
-
+#endif
 }

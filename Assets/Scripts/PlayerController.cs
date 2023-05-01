@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private float cameraSpeed = 30;
     [SerializeField] private float camMoveThreshold = 1;
+    [SerializeField] private float h = 0;
+    [SerializeField] private float v = 0;
+    [SerializeField] private float keyboardSpeed = 0.5f;
     [SerializeField] private bool middleClickPressed;
 
     [Header("Particles")]
@@ -191,6 +194,8 @@ public class PlayerController : MonoBehaviour
     {
         //moveDir = Vector2.Lerp(moveDir, Vector2.zero, stopLerp);
         Vector2 mousePosition = Input.mousePosition;
+        h = Input.GetAxis("Horizontal");
+        v = Input.GetAxis("Vertical");
 
         if (mousePosition.x <= camMoveThreshold)
         {
@@ -199,6 +204,10 @@ public class PlayerController : MonoBehaviour
         else if (mousePosition.x >= Screen.width - 1 - camMoveThreshold)
         {
             moveDir.x = Mathf.Lerp(moveDir.x, 1, accelerationLerp);
+        }
+        else if(Mathf.Abs(h) > 0.1f)
+        {
+            moveDir.x = Mathf.Lerp(moveDir.x, h * keyboardSpeed, accelerationLerp);
         }
         else
         {
@@ -212,6 +221,10 @@ public class PlayerController : MonoBehaviour
         else if (mousePosition.y >= Screen.height - 1 - camMoveThreshold)
         {
             moveDir.y = Mathf.Lerp(moveDir.y, 1, accelerationLerp);
+        }
+        else if (Mathf.Abs(v) > 0.1f)
+        {
+            moveDir.y = Mathf.Lerp(moveDir.y, v * keyboardSpeed, accelerationLerp);
         }
         else
         {

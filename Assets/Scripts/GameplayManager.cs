@@ -132,4 +132,9 @@ public class GameplayManager : MonoBehaviour
         if(actualGoal == null) actualGoal = goalArray[actualGoalIndex];
         gameManager.UIManager.UpdateGoalText(actualGoal.GetGoalText(foodOwned));
     }
+
+    public void DialogEvent(string text)
+    {
+        gameManager.UIManager.ShowUIDialog(text);
+    }
 }

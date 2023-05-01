@@ -7,6 +7,7 @@ public class HandleVisualzier : MonoBehaviour
     [SerializeField] private Vector3 size = Vector3.one * 5;
     [SerializeField] private Color color;
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Handles.color = color;
@@ -22,6 +23,7 @@ public class HandleVisualzier : MonoBehaviour
             Handles.DrawWireCube(Vector3.zero, size);
         }
     }
+#endif
 
     public enum GizmoType
     {

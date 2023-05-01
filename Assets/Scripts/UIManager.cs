@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Game")]
     [SerializeField] private UIGoal uiGoal;
+    [SerializeField] private UIDialog uiDialog;
 
     [Header("Variables")]
     [SerializeField] private float fadeSpeed;
@@ -47,6 +48,11 @@ public class UIManager : MonoBehaviour
     public void UpdateGoalText(string text)
     {
         uiGoal.UpdateText(text);
+    }
+
+    public void ShowUIDialog(string text)
+    {
+        uiDialog.DisplayText(text);
     }
 
     public void GoalSuccess()

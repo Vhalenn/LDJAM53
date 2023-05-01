@@ -60,6 +60,8 @@
     <Compile Include="Assets\Scripts\WorldElements\GoalTrigger.cs" />
     <Compile Include="Assets\Scripts\Utility\Singleton.cs" />
     <Compile Include="Assets\Scripts\AIManager.cs" />
+    <Compile Include="Assets\Scripts\UIDialog.cs" />
+    <Compile Include="Assets\Scripts\TerrainDetailConverter.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\UIGoal.cs" />
     <Compile Include="Assets\Scripts\GameplayManager.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="Assets\Scripts\Visualizers\HandleVisualzier.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\WorldElements\Ressource.cs" />
+    <Compile Include="Assets\Scripts\ObjectToPrefab.cs" />
     <Compile Include="Assets\Scripts\Goal.cs" />
     <Compile Include="Assets\Scripts\WorldElements\Base.cs" />
     <Compile Include="Assets\Scripts\WorldElements\Animal.cs" />

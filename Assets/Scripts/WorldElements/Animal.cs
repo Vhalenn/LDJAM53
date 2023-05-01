@@ -4,6 +4,9 @@ using UnityEngine.AI;
 
 public class Animal : MonoBehaviour
 {
+    [SerializeField] private string agentName;
+    public string AgentName => agentName;
+
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Transform ditheringPattern;
     [SerializeField] private LineRenderer line;

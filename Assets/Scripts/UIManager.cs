@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -9,11 +10,14 @@ public class UIManager : MonoBehaviour
     [Header("Game")]
     [SerializeField] private UIGoal uiGoal;
     [SerializeField] private UIDialog uiDialog;
+    [SerializeField] private TextMeshProUGUI startButtonText;
+    [SerializeField] private TextMeshProUGUI selectionNames;
 
     [Header("Variables")]
     [SerializeField] private float fadeSpeed;
 
-    // Storage
+    [Header("Storage")]
+    [SerializeField] private bool alreadyPlayed;
     private Tween mainMenuTween, gameUITween;
 
     public void ShowMainMenu()
@@ -26,9 +30,24 @@ public class UIManager : MonoBehaviour
         SetGameMenuState(true);
     }
 
+    public void SetSelectionNames(string value)
+    {
+        if(selectionNames) selectionNames.text = value;
+    }
+
     private void SetGameMenuState(bool state)
     {
         Debug.Log($"SetGameMenuState : {state}");
+
+        if(state)
+        {
+            alreadyPlayed = true;
+        }
+
+        if(!state && alreadyPlayed && startButtonText)
+        {
+            startButtonText.text = "Resume";
+        }
 
         GameManager.instance.InMenu = !state;
         SetCanvasGroupState(!state, mainMenu, ref mainMenuTween);

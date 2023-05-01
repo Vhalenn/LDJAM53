@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameplayManager : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
+    public GameManager GameManager => gameManager;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private AIManager aiManager;
 

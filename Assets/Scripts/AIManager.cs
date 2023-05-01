@@ -222,6 +222,7 @@ public class AIManager : MonoBehaviour
         selectedRessource = null;
         selectedAgents = new List<Animal>();
     }
+
     public void Select(GameObject gameObject)
     {
         if (gameObject.TryGetComponent(out Animal animal))
@@ -230,6 +231,7 @@ public class AIManager : MonoBehaviour
         }
 
     }
+
     public void Select(Animal animal)
     {
         animal.Select();
@@ -238,6 +240,14 @@ public class AIManager : MonoBehaviour
         {
             selectedAgents.Add(animal);
         }
+
+        string selectionNames = string.Empty;
+        for (int i = 0; i < selectedAgents.Count; i++)
+        {
+            if (i > 0) selectionNames += ", ";
+            selectionNames += selectedAgents[i].AgentName;
+        }
+        gameplayManager.GameManager.UIManager.SetSelectionNames(selectionNames);
     }
 
 }

@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mat_stylizedLighting_grass
+  m_Name: mat_stylizedLighting_grass_green
   m_Shader: {fileID: -6465566751694194690, guid: dc478d577a940de44b54149211cfa963,
     type: 3}
   m_ValidKeywords: []
@@ -46,8 +46,16 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ToonRamp:
         m_Texture: {fileID: 2800000, guid: 0fc1b73aa3d56dc40b5ef08bf8b1f578, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WindTex:
+        m_Texture: {fileID: 2800000, guid: 83a7337103b5f3f4cb20cbb053d8ef02, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -67,6 +75,10 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 1
+    - _WindAmplitude: 1.5
+    - _WindFrequency: 0.05
+    - _WindSpeed: 0.01
     m_Colors:
-    - _Color: {r: 0.65199995, g: 0.5687659, b: 0.41154605, a: 1}
+    - _Color: {r: 0.34536144, g: 0.546, b: 0.3946988, a: 1}
+    - _WindAmplitude: {r: 2, g: -0.5, b: 2, a: 0}
   m_BuildTextureStacks: []

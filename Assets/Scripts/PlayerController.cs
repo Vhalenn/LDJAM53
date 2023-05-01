@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float camMoveThreshold = 1;
     [SerializeField] private bool middleClickPressed;
 
+    [Header("Particles")]
+    [SerializeField] private ParticleSystem xClick;
+
     [Header("Limit")]
     [SerializeField] private Vector2 lowerLimit = new Vector2(30,20);
     [SerializeField] private Vector2 maxLimit = new Vector2(500,500);
@@ -152,8 +155,11 @@ public class PlayerController : MonoBehaviour
         rayhit = hit;
         rayPos = rayhit.point;
 
+        xClick.transform.position = hit.point;
+        xClick.Emit(1);
+
         // Check the hitted object
-        if(hit.transform.gameObject.layer != 3)
+        if (hit.transform.gameObject.layer != 3)
         {
             if (hit.transform.TryGetComponent(out Ressource ressource))
             {

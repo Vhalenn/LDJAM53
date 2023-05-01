@@ -18,6 +18,9 @@ public class AIManager : MonoBehaviour
     [SerializeField] private GameObject pregnantHorseResting;
 
     [Header("Storage")]
+    [SerializeField] private bool hasMovedHorse;
+    public bool HasMovedHorse => hasMovedHorse;
+
     [SerializeField] private int swapIndexTab = 0;
     [SerializeField] private Animal[] allAgents;
     [SerializeField] private Base[] allBases;
@@ -25,6 +28,7 @@ public class AIManager : MonoBehaviour
 
     void Awake()
     {
+        hasMovedHorse = false;
         allBases = GetComponentsInChildren<Base>();
         allAgents = GetComponentsInChildren<Animal>();
 
@@ -193,6 +197,8 @@ public class AIManager : MonoBehaviour
 
     public void MoveAgentsTo(Vector3 pos)
     {
+        hasMovedHorse = true;
+
         selectedRessource = null;
         for (int i = 0; i < selectedAgents.Count; i++)
         {

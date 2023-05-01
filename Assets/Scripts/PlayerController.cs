@@ -195,6 +195,11 @@ public class PlayerController : MonoBehaviour
 
     private void CheckMoveCamera()
     {
+        if(!aiManager.HasMovedHorse)
+        {
+            return;
+        }
+
         //moveDir = Vector2.Lerp(moveDir, Vector2.zero, stopLerp);
         Vector2 mousePosition = Input.mousePosition;
         h = Input.GetAxis("Horizontal");

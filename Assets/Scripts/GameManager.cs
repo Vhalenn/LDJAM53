@@ -19,9 +19,10 @@ public class GameManager : Singleton<GameManager>
         else
         {
             ShowGame();
-            gameplayManager.PlacePlayerOnSelection();
         }
 
+        Cursor.lockState = CursorLockMode.Confined;
+        gameplayManager.PlacePlayerOnSelection();
         Application.targetFrameRate = 60;
     }
 

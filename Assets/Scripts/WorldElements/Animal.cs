@@ -12,8 +12,6 @@ public class Animal : MonoBehaviour
     [SerializeField] private LineRenderer line;
     [SerializeField] private Animator animator;
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private bool visible;
-    public bool Visible { get => visible; set => visible = value; }
     [SerializeField] private AnimalType type;
     public AnimalType Type => type;
     [SerializeField] private Color gatherColor, moveColor;

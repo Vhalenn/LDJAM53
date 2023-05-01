@@ -7,6 +7,7 @@ public class Animal : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Transform ditheringPattern;
     [SerializeField] private LineRenderer line;
+    [SerializeField] private Animator animator;
     [SerializeField] private bool visible;
     public bool Visible { get => visible; set => visible = value; }
     [SerializeField] private AnimalType type;
@@ -26,13 +27,12 @@ public class Animal : MonoBehaviour
 
     [Header("Gathering Storage")]
     [SerializeField] private Ressource gatheringObject;
-    [SerializeField] private Base baseObject;
-    [SerializeField] private bool goingToBase;
+    [SerializeField] private bool goingToBase => amountOfFood > 0;
     [SerializeField] private int amountOfFood;
 
-    public void Init(Base baseObject)
+    public void Init(AIManager aiManager)
     {
-        this.baseObject = baseObject;
+        this.aiManager = aiManager;
 
         if (ditheringPattern)
         {
@@ -44,6 +44,11 @@ public class Animal : MonoBehaviour
     private void Update()
     {
         isOnOffMeshLink = agent.isOnOffMeshLink;
+
+        if (animator && agent)
+        {
+            animator.SetFloat("speed", agent.velocity.magnitude);
+        }
 
         GatheringCheck();
     }
@@ -67,6 +72,7 @@ public class Animal : MonoBehaviour
             {
                 if (goingToBase) // Reached base
                 {
+                    Base baseObject = aiManager.GetClosestBase(transform.position);
                     // Drop ressources in base
                     if (baseObject)
                     {
@@ -79,7 +85,6 @@ public class Animal : MonoBehaviour
                     {
                         if (gatheringObject.AvailableRessource)
                         {
-                            goingToBase = false;
                             SetRessourceToGather(gatheringObject);
                         }
                         else
@@ -98,7 +103,7 @@ public class Animal : MonoBehaviour
                     }
 
                     // Go to base
-                    goingToBase = true;
+                    Base baseObject = aiManager.GetClosestBase(transform.position);
                     if (baseObject) SetDestination(baseObject.Entrance.position, true);
                 }
             }
@@ -136,7 +141,6 @@ public class Animal : MonoBehaviour
         }
 
         gatheringObject = ressourceObject;
-        goingToBase = false;
         SetDestination(ressourceObject.transform.position, gatheringRessource:true);
     }
 

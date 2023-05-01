@@ -25,6 +25,14 @@ public class Goal
         return locationSuccess && foodSuccess;
     }
 
+    public void SuccessEvent()
+    {
+        if(successEvent != null)
+        {
+            successEvent.Invoke();
+        }
+    }
+
     public void ReachedLocation()
     {
         reachedLocationGoal = true;

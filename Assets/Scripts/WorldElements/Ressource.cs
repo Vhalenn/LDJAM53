@@ -9,7 +9,6 @@ public class Ressource : MonoBehaviour
 {
     [SerializeField] private RessourceType type;
     [SerializeField] private Vector2Int gatheredAmount = new Vector2Int(3, 7);
-    [SerializeField] private int maxQuantity = 50;
 
     [Header("Elements")]
     [SerializeField] private GameObject model;

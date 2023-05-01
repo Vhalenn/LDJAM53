@@ -79,6 +79,6 @@ Material:
     - _WindFrequency: 0.05
     - _WindSpeed: 0.01
     m_Colors:
-    - _Color: {r: 0.299088, g: 0.496, b: 0.3751661, a: 1}
+    - _Color: {r: 0.29803923, g: 0.49411765, b: 0.41315314, a: 1}
     - _WindAmplitude: {r: 2, g: -0.5, b: 2, a: 0}
   m_BuildTextureStacks: []

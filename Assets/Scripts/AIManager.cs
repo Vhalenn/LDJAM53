@@ -13,6 +13,9 @@ public class AIManager : MonoBehaviour
     [SerializeField] private List<Animal> selectedAgents;
     [SerializeField] private Ressource selectedRessource;
 
+    [Header("Start cutscene")]
+    [SerializeField] private Animal pregnantHorse;
+
     [Header("Storage")]
     [SerializeField] private int swapIndexTab = 0;
     [SerializeField] private Animal[] allAgents;
@@ -27,8 +30,7 @@ public class AIManager : MonoBehaviour
         for (int i = 0; i < allAgents.Length; i++)
         {
             if (allAgents[i] == null) continue;
-            Base appropriatedBase = FindBase(allAgents[i].Type);
-            allAgents[i].Init(appropriatedBase);
+            allAgents[i].Init(this);
         }
 
         for (int i = 0; i < allBases.Length; i++)
@@ -76,6 +78,27 @@ public class AIManager : MonoBehaviour
         // IF FAILED
         Debug.LogError($"Couldn't find the base of type {type}");
         return null;
+    }
+
+    public Base GetClosestBase(Vector3 pos)
+    {
+        float distance = 0;
+        float minDistance = 99999;
+        Base selectedBase = allBases[0];
+
+        for (int i = 0; i < allBases.Length; i++)
+        {
+            if (allBases[i] == null) continue;
+
+            distance = Vector3.Distance(pos, allBases[i].transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                selectedBase = allBases[i];
+            }
+        }
+
+        return selectedBase;
     }
 
     public void RefreshFoodGoal()

@@ -91,12 +91,20 @@ public class GameplayManager : MonoBehaviour
 
     private void CheckGoal()
     {
+        if(actualGoalIndex >= goalArray.Length)
+        {
+            Success();
+            return;
+        }
+
         actualGoal = goalArray[actualGoalIndex];
 
         if (actualGoal != null)
         {
             if (actualGoal.Success())
             {
+                actualGoal.SuccessEvent();
+
                 // RESET
                 if(actualGoal.foodAmount > 0)
                 {

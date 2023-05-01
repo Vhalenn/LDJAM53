@@ -221,6 +221,9 @@ public class AIManager : MonoBehaviour
 
         selectedRessource = null;
         selectedAgents = new List<Animal>();
+
+
+        gameplayManager.GameManager.UIManager.SetSelectionNames(string.Empty);
     }
 
     public void Select(GameObject gameObject)

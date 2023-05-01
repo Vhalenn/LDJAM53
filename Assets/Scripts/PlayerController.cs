@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Particles")]
     [SerializeField] private ParticleSystem xClick;
+    [SerializeField] private AudioSource clickSource;
 
     [Header("Limit")]
     [SerializeField] private Vector2 lowerLimit = new Vector2(30,20);
@@ -157,6 +158,8 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit = GetMouseRaycast(layerMask);
         rayhit = hit;
         rayPos = rayhit.point;
+
+        clickSource.Play();
 
         xClick.transform.position = hit.point;
         xClick.Emit(1);

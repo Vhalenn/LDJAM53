@@ -73,6 +73,8 @@
     <Compile Include="Assets\Scripts\Goal.cs" />
     <Compile Include="Assets\Scripts\WorldElements\Base.cs" />
     <Compile Include="Assets\Scripts\WorldElements\Animal.cs" />
+    <Compile Include="Assets\Scripts\DisableGameObject.cs" />
+    <Compile Include="Assets\Scripts\UI_TextAnim.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Art\Shader\Stylized\CustomLighting.hlsl" />

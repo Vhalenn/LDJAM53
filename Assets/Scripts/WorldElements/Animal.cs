@@ -8,6 +8,7 @@ public class Animal : MonoBehaviour
     [SerializeField] private Transform ditheringPattern;
     [SerializeField] private LineRenderer line;
     [SerializeField] private Animator animator;
+    [SerializeField] private AudioSource audioSource;
     [SerializeField] private bool visible;
     public bool Visible { get => visible; set => visible = value; }
     [SerializeField] private AnimalType type;
@@ -34,6 +35,11 @@ public class Animal : MonoBehaviour
     {
         this.aiManager = aiManager;
 
+        if(animator)
+        {
+            animator.SetFloat("offset", Random.value);
+        }
+
         if (ditheringPattern)
         {
             ditheringPattern.localRotation = Quaternion.Euler(new Vector3(0, Random.value * 360, 0));
@@ -50,6 +56,11 @@ public class Animal : MonoBehaviour
             animator.SetFloat("speed", agent.velocity.magnitude);
         }
 
+        if(audioSource && agent)
+        {
+            audioSource.volume = Mathf.Clamp01(agent.velocity.magnitude);
+        }
+
         GatheringCheck();
     }
     public void Select()
@@ -62,6 +73,12 @@ public class Animal : MonoBehaviour
     {
         isSelected = false;
         hasBeenSelected = true;
+    }
+
+    public void Disable()
+    {
+        agent.enabled = false;
+        gameObject.SetActive(false);
     }
 
     private void GatheringCheck()

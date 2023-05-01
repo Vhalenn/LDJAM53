@@ -26,8 +26,7 @@ public class GoalTrigger : MonoBehaviour
 
         if (other.transform.TryGetComponent(out Animal agent))
         {
-
-            if (!agent.HasBeenSelected) return;
+            if (!AgentIsValid(agent)) return;
 
             UpdateCount(count + 1);
 
@@ -40,7 +39,7 @@ public class GoalTrigger : MonoBehaviour
 
     private void UpdateCount(int newValue)
     {
-        count = newValue;
+        count = Mathf.Max(0,newValue);
 
         if(countText)
         {
@@ -63,10 +62,15 @@ public class GoalTrigger : MonoBehaviour
 
         if (other.transform.TryGetComponent(out Animal agent))
         {
-            if (!agent.HasBeenSelected) return;
+            if (!AgentIsValid(agent)) return;
 
             UpdateCount(count - 1);
         }
+    }
+
+    private bool AgentIsValid(Animal agent)
+    {
+        return agent.HasBeenSelected && agent.Type == AnimalType.Horse;
     }
 
 }

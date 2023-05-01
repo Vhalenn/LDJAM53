@@ -42,7 +42,13 @@ public class GameplayManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             Animal nextAnimal = aiManager.GetNextAgentAlreadySelected();
-            PlacePlayerOn(nextAnimal);
+
+            if(nextAnimal != null)
+            {
+                aiManager.ClearSelection();
+                aiManager.Select(nextAnimal);
+                PlacePlayerOn(nextAnimal);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space))

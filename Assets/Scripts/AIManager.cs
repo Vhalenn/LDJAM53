@@ -15,6 +15,7 @@ public class AIManager : MonoBehaviour
 
     [Header("Start cutscene")]
     [SerializeField] private Animal pregnantHorse;
+    [SerializeField] private GameObject pregnantHorseResting;
 
     [Header("Storage")]
     [SerializeField] private int swapIndexTab = 0;
@@ -41,6 +42,30 @@ public class AIManager : MonoBehaviour
 
         ClearSelection();
         Select(allAgents[0]);
+
+
+        if (pregnantHorseResting)
+        {
+            pregnantHorseResting.SetActive(false);
+        }
+    }
+
+    public void RemoveControlOfSummer()
+    {
+        if(selectedAgents.Contains(pregnantHorse))
+        {
+            selectedAgents.Remove(pregnantHorse);
+        }
+
+        if (pregnantHorse)
+        {
+            pregnantHorse.Disable();
+        }
+
+        if(pregnantHorseResting)
+        {
+            pregnantHorseResting.SetActive(true);
+        }
     }
 
     private void Update()
@@ -138,7 +163,7 @@ public class AIManager : MonoBehaviour
         {
             swapIndexTab = i;
 
-            if (allAgents[i].HasBeenSelected)
+            if (allAgents[i].HasBeenSelected && allAgents[i].isActiveAndEnabled)
             {
                 return allAgents[i];
             }
@@ -171,7 +196,7 @@ public class AIManager : MonoBehaviour
         selectedRessource = null;
         for (int i = 0; i < selectedAgents.Count; i++)
         {
-            if (selectedAgents[i] == null) continue;
+            if (selectedAgents[i] == null || !selectedAgents[i].isActiveAndEnabled) continue;
 
             selectedAgents[i].SetDestination(pos, randomizePos:true);
         }
